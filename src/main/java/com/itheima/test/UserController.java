@@ -11,5 +11,6 @@ public class UserController {
         ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
         UserService userService = (UserService) ac.getBean("userService");
         userService.sava();
+        System.out.println("走你");
     }
 }
