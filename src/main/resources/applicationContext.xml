@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+">
+    <!--Spring配置数据源-->
+    <!--
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql:///travel"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>
+    </bean>
+    -->
+    <!--
+        Spring配置数据源,并且抽取jdbc.properties文件
+        首先引入命名空间和约束
+        xmlns:context="http://www.springframework.org/schema/context"
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        Spring容器加载jdbc.properties文件
+    -->
+
+    <!--Spring容器加载jdbc.properties文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClass}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!--
+        Spring注解开发
+            使用注解进行开发时，需要在applicationContext.xml中配置组件扫描，
+            作用是指定哪个包及其子包下的Bean需要进行扫描以便识别使用注解配置的类、字段和方法
+        配置扫描组件:
+            <context:component-scan base-package="com.itheima"/>
+
+    -->
+    <!--配置扫描组件-->
+    <context:component-scan base-package="com.itheima"/>
+</beans>
